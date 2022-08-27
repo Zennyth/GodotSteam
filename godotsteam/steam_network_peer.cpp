@@ -307,8 +307,8 @@ void SteamNetworkPeer::lobbyCreated(int connect, uint64_t lobbyId) {
 		this->lobbyOwner = SteamMatchmaking()->GetLobbyOwner(this->lobbyId);
 		connectionStatus = ConnectionStatus::CONNECTION_CONNECTED;
 		isServer = true;
-		// emit_signal("connection_succeeded");
 		// emit_signal("peer_connected",1);
+		// emit_signal("connection_succeeded");
 	} else {
 		ERR_PRINT("ERROR ON LOBBY CREATION!");
 		emit_signal("connection_failed");
@@ -361,6 +361,7 @@ void SteamNetworkPeer::lobbyJoined(uint64_t lobbyId, uint32_t permissions, bool 
 		if (isServer) {
 			//don't do stuff if you're already the host
 		} else {
+			addConnectionPeer(this->lobbyOwner);
 			emit_signal("peer_connected",1);
 			emit_signal("connection_succeeded");
 		}
