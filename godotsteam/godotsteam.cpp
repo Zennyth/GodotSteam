@@ -546,7 +546,7 @@ String Steam::getAppInstallDir(AppId_t app_id){
 	char *buffer = new char[folder_buffer];
 	SteamApps()->GetAppInstallDir(app_id, (char*)buffer, folder_buffer);
 	String app_dir = buffer;
-	delete[] buffer;
+	// delete[] buffer;
 	return app_dir;
 }
 
@@ -640,7 +640,7 @@ Array Steam::getInstalledDepots(uint32_t app_id){
 	for(int i = 0; i < installed; i++){
 		installed_depots.append(depots[i]);
 	}
-	delete[] depots;
+	// delete[] depots;
 	return installed_depots;
 }
 
@@ -8680,13 +8680,13 @@ void Steam::_network_connection_status_changed(SteamNetConnectionStatusChangedCa
 	SteamNetConnectionInfo_t connectionInfo = call_data->m_info;
 	// Move connection info into a dictionary
 	Dictionary connection;
-	char identity;
-	connectionInfo.m_identityRemote.ToString(&identity, 128);
+	char identity[128];
+	connectionInfo.m_identityRemote.ToString(identity, 128);
 	connection["identity"] = identity;
 	connection["user_data"] = (uint64_t)connectionInfo.m_nUserData;
 	connection["listen_socket"] = connectionInfo.m_hListenSocket;
-	char ip_address;
-	connectionInfo.m_addrRemote.ToString(&ip_address, 128, true);
+	char ip_address[128];
+	connectionInfo.m_addrRemote.ToString(ip_address, 128, true);
 	connection["remote_address"] = ip_address;
 	connection["remote_pop"] = connectionInfo.m_idPOPRemote;
 	connection["pop_relay"] = connectionInfo.m_idPOPRelay;
@@ -8709,7 +8709,7 @@ void Steam::_network_authentication_status(SteamNetAuthenticationStatus_t* call_
 	debug_message = call_data->m_debugMsg;
 	// Send the data back via signal
 	emit_signal("network_authentication_status", available, debug_message);
-	delete[] debug_message;
+	// delete[] debug_message;
 }
 
 // NETWORKING UTILS CALLBACKS ///////////////////
@@ -8723,7 +8723,7 @@ void Steam::_relay_network_status(SteamRelayNetworkStatus_t* call_data){
 	char *debug_message = new char[256];
 	debug_message = call_data->m_debugMsg;
 	emit_signal("relay_network_status", available, pingMeasurement, availableConfig, availableRelay, debug_message);
-	delete[] debug_message;
+	// delete[] debug_message;
 }
 
 // PARENTAL SETTINGS CALLBACKS //////////////////
@@ -9134,7 +9134,7 @@ void Steam::_inventory_eligible_promo_item(SteamInventoryEligiblePromoItemDefIDs
 			}
 		}
 		// Delete the temporary array
-		delete[] id_array;
+		// delete[] id_array;
 		// Return the item array as a signal
 		emit_signal("inventory_eligible_promo_Item", result, cached, definitions);
 	}

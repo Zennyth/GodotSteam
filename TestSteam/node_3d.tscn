@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://caht7hn527px5"]
+
+[ext_resource type="Script" path="res://scripts/client.gd" id="1_7upq0"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_7upq0")
+
+[node name="TextEdit" type="TextEdit" parent="."]
+offset_left = 331.0
+offset_top = 220.0
+offset_right = 723.0
+offset_bottom = 316.0
+text = "Vide"
