@@ -4191,7 +4191,7 @@ int Steam::getSessionConnectionInfo(){
 		return 0;
 	}
 	SteamNetConnectionInfo_t info;
-	SteamNetworkingQuickConnectionStatus status;
+	SteamNetConnectionRealTimeStatus_t status;
 	return SteamNetworkingMessages()->GetSessionConnectionInfo(networkingIdentity, &info, &status);
 }
 
@@ -4427,8 +4427,8 @@ bool Steam::getQuickConnectionStatus(uint32 connection){
 	if(SteamNetworkingSockets() == NULL){
 		return false;
 	}
-	SteamNetworkingQuickConnectionStatus stats;
-	return SteamNetworkingSockets()->GetQuickConnectionStatus((HSteamNetConnection)connection, &stats);
+	SteamNetConnectionInfo_t stats;
+	return SteamNetworkingSockets()->GetConnectionInfo((HSteamNetConnection)connection, &stats);
 }
 
 // Returns very detailed connection stats in diagnostic text format. Useful for dumping to a log, etc. The format of this information is subject to change.
@@ -4753,16 +4753,16 @@ int Steam::getPOPList(){
 Dictionary Steam::getConfigValueInfo(int value){
 	Dictionary config_info;
 	if(SteamNetworkingUtils() != NULL){
-		const char *name;
+		// const char *name;
 		ESteamNetworkingConfigDataType data_type;
 		ESteamNetworkingConfigScope scope;
-		ESteamNetworkingConfigValue next_value;
-		if(SteamNetworkingUtils()->GetConfigValueInfo((ESteamNetworkingConfigValue)value, &name, &data_type, &scope, &next_value)){
+		// ESteamNetworkingConfigValue next_value;
+		if(SteamNetworkingUtils()->GetConfigValueInfo((ESteamNetworkingConfigValue)value, &data_type, &scope)){
 			// Populate the dictionary
-			config_info["value"] = name;
+			// config_info["value"] = name;
 			config_info["type"] = data_type;
 			config_info["scope"] = scope;
-			config_info["next_value"] = next_value;
+			// config_info["next_value"] = next_value;
 		}
 	}
 	return config_info;
@@ -4773,7 +4773,9 @@ int Steam::getFirstConfigValue(){
 	if(SteamNetworkingUtils() == NULL){
 		return 0;
 	}
-	return SteamNetworkingUtils()->GetFirstConfigValue();
+	// TODO: find new implementation
+	// return SteamNetworkingUtils()->GetFirstConfigValue();
+	return 0;
 }
 
 // The following functions are handy shortcuts for common use cases.
